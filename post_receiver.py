@@ -3,7 +3,7 @@ import time
 import os
 import ssl
 
-hostName = "train-effbws1"
+hostName = "HOSTNAME"  # <--- Can be localhost, or hostname
 hostPort = 443
 
 
@@ -15,14 +15,14 @@ class ListenToPostandWriteToFile(BaseHTTPRequestHandler):
 		i = 0
 		while os.path.exists("alert%s.xml" % i):
 			i += 1
-		with open("alert%s.xml" % i,'wb') as output:
+		with open("alert%s.xml" % i,'wb') as output:    # <---  right now filename ouputs will be alert#.xml, this can be changed here. 
 			output.write(post_data)
 
 httpd = HTTPServer((hostName, hostPort), ListenToPostandWriteToFile)
 	
 httpd.socket = ssl.wrap_socket (httpd.socket,
-		keyfile=r'C:\Users\Administrator\Desktop\train-effbws1.jeppesen.com.20180315-20230315\train-effbws1.jeppesen.com.key',
-		certfile=r'C:\Users\Administrator\Desktop\train-effbws1.jeppesen.com.20180315-20230315\train-effbws1.jeppesen.com.crt',
+		keyfile=r'RAW\WINDOWS\PATH\TO\KEY\CERTIFICATE\FILE.KEY',   # <--- note the prepended r'  indicating raw paths
+		certfile=r'RAW\WINDOWS\PATH\TO\CERTIFICATE\FILE.CRT',
 		server_side=True) 
 
 print(time.asctime(), "Server Starts - %s:%s" % (hostName, hostPort))
